@@ -1,0 +1,119 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Prisma: generate client",
+			"type": "shell",
+			"command": "npx prisma generate",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Typecheck",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Typecheck 2",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build 3",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build 4",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build 5",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build 6",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build register page",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build after register fix",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build after UI+API tag changes",
+			"type": "shell",
+			"command": "npm run -s build",
+			"args": [],
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "docker:up",
+			"type": "shell",
+			"command": "docker compose up --build",
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "docker:up",
+			"type": "shell",
+			"command": "docker compose up --build",
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}
