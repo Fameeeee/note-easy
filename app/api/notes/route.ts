@@ -60,7 +60,7 @@ export async function POST(req: Request) {
 
   // Upsert tags
   const tagRecords = await Promise.all(
-    (tags as string[]).map(async (t) =>
+    (tags as string[]).map(async (t): Promise<{ id: string; name: string; createdAt: Date }> =>
       prisma.tag.upsert({
         where: { name: t },
         update: {},
@@ -75,25 +75,22 @@ export async function POST(req: Request) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
-  const updated = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      // history
-      await tx.noteHistory.create({
-        data: { noteId: id, title: prev.title, content: prev.content },
-      });
+    // MongoDB via Prisma does not support transactions; perform sequential ops
+    await prisma.noteHistory.create({
+      data: { noteId: id, title: prev.title, content: prev.content },
+    });
 
-  const result = await tx.note.update({
-        where: { id },
-        data: {
-          title,
-          content,
-          tags: {
-            deleteMany: {},
-            create: tagRecords.map((tr) => ({ tagId: tr.id })),
-          },
+    const updated = await prisma.note.update({
+      where: { id },
+      data: {
+        title,
+        content,
+        tags: {
+          deleteMany: {},
+          create: tagRecords.map((tr: { id: string }) => ({ tagId: tr.id })),
         },
-        include: { tags: { include: { tag: true } }, author: true },
-      });
-      return result;
+      },
+      include: { tags: { include: { tag: true } }, author: true },
     });
 
     return NextResponse.json(updated);
@@ -103,7 +100,7 @@ export async function POST(req: Request) {
         title,
         content,
         authorId: session.user.id,
-        tags: { create: tagRecords.map((tr) => ({ tagId: tr.id })) },
+        tags: { create: tagRecords.map((tr: { id: string }) => ({ tagId: tr.id })) },
       },
       include: { tags: { include: { tag: true } }, author: true },
     });
@@ -126,11 +123,10 @@ export async function DELETE(req: Request) {
   }
 
   try {
-    await prisma.$transaction([
-      prisma.noteTag.deleteMany({ where: { noteId: id } }),
-      prisma.noteHistory.deleteMany({ where: { noteId: id } }),
-      prisma.note.delete({ where: { id } }),
-    ]);
+    // Sequential deletes for MongoDB provider
+    await prisma.noteTag.deleteMany({ where: { noteId: id } });
+    await prisma.noteHistory.deleteMany({ where: { noteId: id } });
+    await prisma.note.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Failed to delete note";

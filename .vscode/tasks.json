@@ -101,19 +101,6 @@
 			],
 			"group": "build"
 		},
-		{
-			"label": "docker:up",
-			"type": "shell",
-			"command": "docker compose up --build",
-			"isBackground": false,
-			"group": "build"
-		},
-		{
-			"label": "docker:up",
-			"type": "shell",
-			"command": "docker compose up --build",
-			"isBackground": false,
-			"group": "build"
-		}
+		
 	]
 }
