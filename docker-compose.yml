@@ -22,9 +22,9 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/note_easy?schema=public"
+      DATABASE_URL: "${DB_URL}"
       NEXTAUTH_SECRET: "${NEXTAUTH_SECRET}"
-      NEXTAUTH_URL: "http://localhost:3000"
+      NEXTAUTH_URL: "${HOST}"
       AUTH_TRUST_HOST: "true"
     ports:
       - "3000:3000"

@@ -32,7 +32,8 @@ export default function Toaster() {
     };
     if (typeof window !== "undefined") {
       window.addEventListener("app:toast", handler as EventListener);
-      return () => window.removeEventListener("app:toast", handler as EventListener);
+      return () =>
+        window.removeEventListener("app:toast", handler as EventListener);
     }
   }, []);
   useEffect(() => setMounted(true), []);

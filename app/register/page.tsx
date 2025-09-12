@@ -27,7 +27,6 @@ export default function RegisterPage() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.error || "Registration failed");
       }
-      // auto sign-in after register
       const signInRes = await signIn("credentials", {
         email,
         password,
@@ -41,7 +40,8 @@ export default function RegisterPage() {
         router.push("/auth/login");
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Registration failed";
+      const message =
+        err instanceof Error ? err.message : "Registration failed";
       setError(message);
       notifyError(message);
     } finally {
@@ -51,7 +51,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center">
-      <form onSubmit={onSubmit} className="w-full max-w-sm bg-slate-950 p-6 rounded border border-slate-800 space-y-3">
+      <form
+        onSubmit={onSubmit}
+        className="w-full max-w-sm bg-slate-950 p-6 rounded border border-slate-800 space-y-3"
+      >
         <div className="text-center text-xl font-semibold">Create account</div>
         <input
           type="text"
@@ -86,7 +89,10 @@ export default function RegisterPage() {
           {loading ? "Creating..." : "Create account"}
         </button>
         <div className="text-center text-sm opacity-80">
-          Have an account? <Link href="/auth/login" className="text-yellow-400 hover:underline">Sign in</Link>
+          Have an account?{" "}
+          <Link href="/auth/login" className="text-yellow-400 hover:underline">
+            Sign in
+          </Link>
         </div>
       </form>
     </div>

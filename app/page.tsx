@@ -135,7 +135,9 @@ function HomeInner() {
             >
               Notes
             </button>
-            <span className="font-semibold tracking-tight hidden md:inline">Note Easy</span>
+            <span className="font-semibold tracking-tight hidden md:inline">
+              Note Easy
+            </span>
           </div>
           <div className="flex items-center gap-3 text-sm opacity-85">
             <span className="opacity-80 hidden sm:inline">
@@ -161,7 +163,9 @@ function HomeInner() {
               >
                 <option value="">All tags</option>
                 {allTags.map((t) => (
-                  <option key={t} value={t}>#{t}</option>
+                  <option key={t} value={t}>
+                    #{t}
+                  </option>
                 ))}
               </select>
               <select
@@ -281,7 +285,9 @@ function HomeInner() {
                   {allTags
                     .filter((t) => !tags.includes(t))
                     .map((t) => (
-                      <option key={t} value={t}>#{t}</option>
+                      <option key={t} value={t}>
+                        #{t}
+                      </option>
                     ))}
                 </select>
               </div>
@@ -301,7 +307,9 @@ function HomeInner() {
                   const sure = window.confirm("Delete this note?");
                   if (!sure) return;
                   try {
-                    const res = await fetch(`/api/notes?id=${selected.id}`, { method: "DELETE" });
+                    const res = await fetch(`/api/notes?id=${selected.id}`, {
+                      method: "DELETE",
+                    });
                     if (!res.ok) {
                       const err = await res.json().catch(() => ({}));
                       throw new Error(err?.error || "Failed to delete note");
@@ -313,7 +321,8 @@ function HomeInner() {
                     setTags([]);
                     fetchNotes();
                   } catch (e: unknown) {
-                    const message = e instanceof Error ? e.message : "Failed to delete note";
+                    const message =
+                      e instanceof Error ? e.message : "Failed to delete note";
                     notifyError(message);
                   }
                 }}
@@ -327,7 +336,9 @@ function HomeInner() {
                   if (!selected) return;
                   setIsHistoryOpen(true);
                   setIsHistoryLoading(true);
-                  const res = await fetch(`/api/notes/history?noteId=${selected.id}`);
+                  const res = await fetch(
+                    `/api/notes/history?noteId=${selected.id}`
+                  );
                   if (res.ok) setHistory(await res.json());
                   setIsHistoryLoading(false);
                 }}
@@ -366,7 +377,8 @@ function HomeInner() {
                             {h.title || "(untitled)"}
                           </div>
                           <div className="mt-1 text-xs opacity-80 whitespace-pre-wrap">
-                            {(h.content || "").slice(0, 200)}{(h.content || "").length > 200 ? "…" : ""}
+                            {(h.content || "").slice(0, 200)}
+                            {(h.content || "").length > 200 ? "…" : ""}
                           </div>
                           <div className="mt-2">
                             <button
@@ -393,11 +405,19 @@ function HomeInner() {
 
       {mobileListOpen && (
         <div className="md:hidden fixed inset-0 z-40">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileListOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setMobileListOpen(false)}
+          />
           <div className="absolute inset-y-0 left-0 w-[92%] max-w-sm bg-slate-950 border-r border-slate-800 p-3 overflow-auto">
             <div className="flex items-center justify-between mb-2">
               <div className="font-medium">Notes</div>
-              <button onClick={() => setMobileListOpen(false)} className="px-2 py-1 rounded border border-slate-700 hover:bg-slate-900">Close</button>
+              <button
+                onClick={() => setMobileListOpen(false)}
+                className="px-2 py-1 rounded border border-slate-700 hover:bg-slate-900"
+              >
+                Close
+              </button>
             </div>
             <div className="space-y-3">
               <div className="w-full p-2 rounded border border-slate-800 bg-slate-900/80">
@@ -409,7 +429,9 @@ function HomeInner() {
                   >
                     <option value="">All tags</option>
                     {allTags.map((t) => (
-                      <option key={t} value={t}>#{t}</option>
+                      <option key={t} value={t}>
+                        #{t}
+                      </option>
                     ))}
                   </select>
                   <select
@@ -449,14 +471,23 @@ function HomeInner() {
                 {notes.map((n) => (
                   <button
                     key={n.id}
-                    onClick={() => { onSelect(n); setMobileListOpen(false); }}
-                    className={`w-full text-left p-3 hover:bg-slate-800/70 ${selected?.id === n.id ? "bg-slate-800/70" : ""}`}
+                    onClick={() => {
+                      onSelect(n);
+                      setMobileListOpen(false);
+                    }}
+                    className={`w-full text-left p-3 hover:bg-slate-800/70 ${
+                      selected?.id === n.id ? "bg-slate-800/70" : ""
+                    }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="font-medium">{n.title}</div>
-                      <div className="text-xs opacity-70">{new Date(n.createdAt).toLocaleString()}</div>
+                      <div className="text-xs opacity-70">
+                        {new Date(n.createdAt).toLocaleString()}
+                      </div>
                     </div>
-                    <div className="text-xs opacity-80">by {n.author.name || n.author.email}</div>
+                    <div className="text-xs opacity-80">
+                      by {n.author.name || n.author.email}
+                    </div>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {n.tags.map(({ tag }) => (
                         <TagChip key={tag.id} label={tag.name} />
@@ -465,11 +496,15 @@ function HomeInner() {
                   </button>
                 ))}
                 {notes.length === 0 && (
-                  <div className="p-6 text-center text-sm opacity-70">No notes</div>
+                  <div className="p-6 text-center text-sm opacity-70">
+                    No notes
+                  </div>
                 )}
               </div>
               <div className="flex items-center gap-2 justify-between">
-                <div className="text-xs opacity-70">Page {page} / {totalPages} · {total} items</div>
+                <div className="text-xs opacity-70">
+                  Page {page} / {totalPages} · {total} items
+                </div>
                 <div className="flex gap-2">
                   <button
                     disabled={page <= 1}
@@ -557,10 +592,17 @@ function TagEditor({
         const cleanedLower = cleaned.toLowerCase();
         const chosen = new Set(tags.map((t) => t.toLowerCase()));
         const suggestions = allTags
-          .filter((t) => t.toLowerCase().includes(cleanedLower) && !chosen.has(t.toLowerCase()))
+          .filter(
+            (t) =>
+              t.toLowerCase().includes(cleanedLower) &&
+              !chosen.has(t.toLowerCase())
+          )
           .slice(0, 8);
-        const exactExists = allTags.some((t) => t.toLowerCase() === cleanedLower);
-        const showCreate = cleaned.length > 0 && !chosen.has(cleanedLower) && !exactExists;
+        const exactExists = allTags.some(
+          (t) => t.toLowerCase() === cleanedLower
+        );
+        const showCreate =
+          cleaned.length > 0 && !chosen.has(cleanedLower) && !exactExists;
         if (!cleaned && suggestions.length === 0) return null;
         return (
           <div className="mt-2 border border-slate-800 rounded p-2 bg-slate-900/60">
@@ -580,7 +622,10 @@ function TagEditor({
             )}
             {showCreate && (
               <button
-                onClick={() => { add(cleaned); setInput(""); }}
+                onClick={() => {
+                  add(cleaned);
+                  setInput("");
+                }}
                 className="text-left w-full px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-sm"
               >
                 Create #{cleaned}

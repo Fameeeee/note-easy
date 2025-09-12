@@ -11,7 +11,7 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  preload: false, // avoid preloading monospace font on pages that don't use it
+  preload: false, 
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-  <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {children}
         {/* Global notifications */}
         <Toaster />
