@@ -5,12 +5,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(cuid())
   email         String   @unique
   name          String?
   passwordHash  String
@@ -20,37 +20,36 @@ model User {
 }
 
 model Note {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(cuid())
   title       String
   content     String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  authorId    String        @db.ObjectId
+  authorId    String
   author      User          @relation(fields: [authorId], references: [id])
   tags        NoteTag[]
   histories   NoteHistory[]
 }
 
 model Tag {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(cuid())
   name      String    @unique
   createdAt DateTime  @default(now())
   notes     NoteTag[]
 }
 
 model NoteTag {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  noteId String @db.ObjectId
-  tagId  String @db.ObjectId
+  noteId String
+  tagId  String
   note   Note   @relation(fields: [noteId], references: [id])
   tag    Tag    @relation(fields: [tagId], references: [id])
 
-  @@unique([noteId, tagId])
+  @@id([noteId, tagId])
 }
 
 model NoteHistory {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  noteId    String   @db.ObjectId
+  id        String   @id @default(cuid())
+  noteId    String
   note      Note     @relation(fields: [noteId], references: [id])
   title     String
   content   String
